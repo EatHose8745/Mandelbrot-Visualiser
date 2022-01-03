@@ -45,7 +45,7 @@
             this.MandelbrotPanel.Name = "MandelbrotPanel";
             this.MandelbrotPanel.Size = new System.Drawing.Size(500, 500);
             this.MandelbrotPanel.TabIndex = 1;
-            this.MandelbrotPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MandelbrotPanel_MouseMove);
+            this.MandelbrotPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MandelbrotPanel_MouseClick);
             // 
             // xOffsetValue
             // 

@@ -35,7 +35,7 @@ namespace Mandelbrot_Visualiser
 
         private void MandelbrotPanel_MouseWheel(object sender, MouseEventArgs e)
         {
-            if ((zoomValue + zoomIncrement < zoomIncrement && e.Delta > 0) || (zoomValue - zoomIncrement < zoomIncrement && e.Delta < 0))
+            if ((zoomValue + zoomIncrement <= 0 && e.Delta > 0) || (zoomValue - zoomIncrement <= 0 && e.Delta < 0))
             {
                 zoomValue = zoomIncrement;
                 return;
@@ -65,8 +65,8 @@ namespace Mandelbrot_Visualiser
         private void Render(double xOffset = 0, double yOffset = 0, double zoom = 1)
         {
             renderStopwatch.Start();
-            mandelbrot.xScaleBounds = new double[2] { (mandelbrot.initialScaleBounds[0][0] / zoom) + xOffset, (mandelbrot.initialScaleBounds[0][1] / zoom) + xOffset };
-            mandelbrot.yScaleBounds = new double[2] { (mandelbrot.initialScaleBounds[1][0] / zoom) + yOffset, (mandelbrot.initialScaleBounds[1][1] / zoom) + yOffset };
+            mandelbrot.xScaleBounds = new double[2] { (mandelbrot.initialScaleBounds[0][0] / (zoom * zoom)) + xOffset, (mandelbrot.initialScaleBounds[0][1] / (zoom * zoom)) + xOffset };
+            mandelbrot.yScaleBounds = new double[2] { (mandelbrot.initialScaleBounds[1][0] / (zoom * zoom)) + yOffset, (mandelbrot.initialScaleBounds[1][1] / (zoom * zoom)) + yOffset };
             mandelbrot.Render();
             renderStopwatch.Stop();
             Console.WriteLine($"Time Took: {renderStopwatch.Elapsed} Seconds");
@@ -77,23 +77,9 @@ namespace Mandelbrot_Visualiser
 
         private void VisualiserWindow_Load(object sender, EventArgs e)
         {
-            mandelbrot = new Mandelbrot(MandelbrotPanel.Width, MandelbrotPanel.Height, -2, -2, 2, 2, 1, 250);
-            Render(0, 0);
+            mandelbrot = new Mandelbrot(MandelbrotPanel.Width, MandelbrotPanel.Height, -2, -2, 2, 2, 1, 100);
+            Render(0, 0, zoomValue);
             MandelbrotPanel.BackgroundImage = (Image)mandelbrot.bitmap;
-        }
-
-        private void MandelbrotPanel_MouseMove(object sender, MouseEventArgs e)
-        {
-            /*this.mouseX = e.X;
-            this.mouseY = e.Y;
-            if (e.Button == MouseButtons.Left)
-            {
-                mandelbrot.xScaleBounds = new double[2] { mandelbrot.xScaleBounds[0] + MapLocationToScale(e.X - mouseX, mandelbrot.imageWidth, mandelbrot.xScaleBounds[0], mandelbrot.xScaleBounds[1]), mandelbrot.xScaleBounds[1] +  MapLocationToScale(e.X - mouseX, mandelbrot.imageWidth, mandelbrot.xScaleBounds[0], mandelbrot.xScaleBounds[1]) };
-                mandelbrot.xScaleBounds = new double[2] { mandelbrot.yScaleBounds[0] + MapLocationToScale(e.Y - mouseY, mandelbrot.imageHeight, mandelbrot.yScaleBounds[0], mandelbrot.yScaleBounds[1]), mandelbrot.yScaleBounds[1] + MapLocationToScale(e.Y - mouseY, mandelbrot.imageHeight, mandelbrot.yScaleBounds[0], mandelbrot.yScaleBounds[1]) };
-                Render(0, 0);
-                MandelbrotPanel.Refresh();
-            }*/
-            //Console.WriteLine($"{e.X}, {e.Y}");
         }
 
         private void xOffsetValue_KeyPress(object sender, KeyPressEventArgs e)
@@ -143,6 +129,20 @@ namespace Mandelbrot_Visualiser
             this.recordedXOffset = 0;
             this.recordedYOffset = 0;
             Render(recordedXOffset, recordedYOffset, zoomValue);
+        }
+
+        private void MandelbrotPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            this.mouseX = e.X;
+            this.mouseY = e.Y;
+            if (e.Button == MouseButtons.Left)
+            {
+                double xOffset = MapLocationToScale(e.X, mandelbrot.imageWidth, mandelbrot.xScaleBounds[0], mandelbrot.xScaleBounds[1]);
+                double yOffset = MapLocationToScale(e.Y, mandelbrot.imageHeight, mandelbrot.yScaleBounds[0], mandelbrot.yScaleBounds[1]);
+                Render(recordedXOffset = xOffset , recordedYOffset = yOffset , zoomValue);
+                MandelbrotPanel.Refresh();
+            }
+            //Console.WriteLine($"{e.X}, {e.Y}");
         }
     }
 }
