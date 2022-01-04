@@ -29,95 +29,24 @@
         private void InitializeComponent()
         {
             this.MandelbrotPanel = new System.Windows.Forms.Panel();
-            this.xOffsetValue = new System.Windows.Forms.TextBox();
-            this.yOffsetValue = new System.Windows.Forms.TextBox();
-            this.SetOffsets = new System.Windows.Forms.Button();
-            this.ShiftViewRight = new System.Windows.Forms.Button();
-            this.ShiftViewLeft = new System.Windows.Forms.Button();
-            this.ShiftViewUp = new System.Windows.Forms.Button();
-            this.ShiftViewDown = new System.Windows.Forms.Button();
             this.ResetButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.PowerText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // MandelbrotPanel
             // 
-            this.MandelbrotPanel.Location = new System.Drawing.Point(283, 36);
+            this.MandelbrotPanel.Location = new System.Drawing.Point(270, 36);
             this.MandelbrotPanel.Name = "MandelbrotPanel";
-            this.MandelbrotPanel.Size = new System.Drawing.Size(500, 500);
+            this.MandelbrotPanel.Size = new System.Drawing.Size(450, 450);
             this.MandelbrotPanel.TabIndex = 1;
+            this.MandelbrotPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MandelbrotPanel_Paint);
             this.MandelbrotPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MandelbrotPanel_MouseClick);
-            // 
-            // xOffsetValue
-            // 
-            this.xOffsetValue.Location = new System.Drawing.Point(841, 140);
-            this.xOffsetValue.Name = "xOffsetValue";
-            this.xOffsetValue.Size = new System.Drawing.Size(100, 20);
-            this.xOffsetValue.TabIndex = 2;
-            this.xOffsetValue.Text = "0";
-            this.xOffsetValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.xOffsetValue_KeyPress);
-            // 
-            // yOffsetValue
-            // 
-            this.yOffsetValue.Location = new System.Drawing.Point(841, 187);
-            this.yOffsetValue.Name = "yOffsetValue";
-            this.yOffsetValue.Size = new System.Drawing.Size(100, 20);
-            this.yOffsetValue.TabIndex = 3;
-            this.yOffsetValue.Text = "0";
-            this.yOffsetValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.xOffsetValue_KeyPress);
-            // 
-            // SetOffsets
-            // 
-            this.SetOffsets.Location = new System.Drawing.Point(961, 162);
-            this.SetOffsets.Name = "SetOffsets";
-            this.SetOffsets.Size = new System.Drawing.Size(75, 23);
-            this.SetOffsets.TabIndex = 4;
-            this.SetOffsets.Text = "Set";
-            this.SetOffsets.UseVisualStyleBackColor = true;
-            this.SetOffsets.Click += new System.EventHandler(this.SetOffsets_Click);
-            // 
-            // ShiftViewRight
-            // 
-            this.ShiftViewRight.Location = new System.Drawing.Point(789, 271);
-            this.ShiftViewRight.Name = "ShiftViewRight";
-            this.ShiftViewRight.Size = new System.Drawing.Size(29, 23);
-            this.ShiftViewRight.TabIndex = 5;
-            this.ShiftViewRight.Text = ">";
-            this.ShiftViewRight.UseVisualStyleBackColor = true;
-            this.ShiftViewRight.Click += new System.EventHandler(this.ShiftView_Click);
-            // 
-            // ShiftViewLeft
-            // 
-            this.ShiftViewLeft.Location = new System.Drawing.Point(248, 283);
-            this.ShiftViewLeft.Name = "ShiftViewLeft";
-            this.ShiftViewLeft.Size = new System.Drawing.Size(29, 23);
-            this.ShiftViewLeft.TabIndex = 6;
-            this.ShiftViewLeft.Text = "<";
-            this.ShiftViewLeft.UseVisualStyleBackColor = true;
-            this.ShiftViewLeft.Click += new System.EventHandler(this.ShiftView_Click);
-            // 
-            // ShiftViewUp
-            // 
-            this.ShiftViewUp.Location = new System.Drawing.Point(521, 7);
-            this.ShiftViewUp.Name = "ShiftViewUp";
-            this.ShiftViewUp.Size = new System.Drawing.Size(29, 23);
-            this.ShiftViewUp.TabIndex = 7;
-            this.ShiftViewUp.Text = "^";
-            this.ShiftViewUp.UseVisualStyleBackColor = true;
-            this.ShiftViewUp.Click += new System.EventHandler(this.ShiftView_Click);
-            // 
-            // ShiftViewDown
-            // 
-            this.ShiftViewDown.Location = new System.Drawing.Point(521, 542);
-            this.ShiftViewDown.Name = "ShiftViewDown";
-            this.ShiftViewDown.Size = new System.Drawing.Size(29, 23);
-            this.ShiftViewDown.TabIndex = 8;
-            this.ShiftViewDown.Text = "v";
-            this.ShiftViewDown.UseVisualStyleBackColor = true;
-            this.ShiftViewDown.Click += new System.EventHandler(this.ShiftView_Click);
             // 
             // ResetButton
             // 
-            this.ResetButton.Location = new System.Drawing.Point(905, 282);
+            this.ResetButton.Location = new System.Drawing.Point(838, 139);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(75, 23);
             this.ResetButton.TabIndex = 9;
@@ -125,19 +54,43 @@
             this.ResetButton.UseVisualStyleBackColor = true;
             this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(835, 178);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(193, 26);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Left click to center targeted coordinate.\r\nMWheel to zoom in/out.";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(835, 36);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(84, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Power (z^n + c):";
+            // 
+            // PowerText
+            // 
+            this.PowerText.Location = new System.Drawing.Point(838, 52);
+            this.PowerText.Name = "PowerText";
+            this.PowerText.Size = new System.Drawing.Size(100, 20);
+            this.PowerText.TabIndex = 12;
+            this.PowerText.Text = "2";
+            this.PowerText.TextChanged += new System.EventHandler(this.PowerText_TextChanged);
+            this.PowerText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PowerText_KeyPress);
+            // 
             // VisualiserWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 611);
+            this.Controls.Add(this.PowerText);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.ResetButton);
-            this.Controls.Add(this.ShiftViewDown);
-            this.Controls.Add(this.ShiftViewUp);
-            this.Controls.Add(this.ShiftViewLeft);
-            this.Controls.Add(this.ShiftViewRight);
-            this.Controls.Add(this.SetOffsets);
-            this.Controls.Add(this.yOffsetValue);
-            this.Controls.Add(this.xOffsetValue);
             this.Controls.Add(this.MandelbrotPanel);
             this.Name = "VisualiserWindow";
             this.ShowIcon = false;
@@ -151,14 +104,10 @@
         #endregion
 
         private System.Windows.Forms.Panel MandelbrotPanel;
-        private System.Windows.Forms.TextBox xOffsetValue;
-        private System.Windows.Forms.TextBox yOffsetValue;
-        private System.Windows.Forms.Button SetOffsets;
-        private System.Windows.Forms.Button ShiftViewRight;
-        private System.Windows.Forms.Button ShiftViewLeft;
-        private System.Windows.Forms.Button ShiftViewUp;
-        private System.Windows.Forms.Button ShiftViewDown;
         private System.Windows.Forms.Button ResetButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox PowerText;
     }
 }
 

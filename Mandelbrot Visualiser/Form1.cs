@@ -31,6 +31,7 @@ namespace Mandelbrot_Visualiser
         {
             InitializeComponent();
             this.MandelbrotPanel.MouseWheel += new MouseEventHandler(MandelbrotPanel_MouseWheel);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
 
         private void MandelbrotPanel_MouseWheel(object sender, MouseEventArgs e)
@@ -51,8 +52,7 @@ namespace Mandelbrot_Visualiser
             }
             zoomValue = (double)decimal.Round((decimal)zoomValue, 1);
             Render(recordedXOffset, recordedYOffset, zoomValue);
-            MandelbrotPanel.Refresh();
-            Console.WriteLine(zoomValue);
+            //Console.WriteLine(zoomValue);
         }
 
         private double MapLocationToScale(double n, int size, double min, double max)
@@ -65,21 +65,20 @@ namespace Mandelbrot_Visualiser
         private void Render(double xOffset = 0, double yOffset = 0, double zoom = 1)
         {
             renderStopwatch.Start();
-            mandelbrot.xScaleBounds = new double[2] { (mandelbrot.initialScaleBounds[0][0] / (zoom * zoom)) + xOffset, (mandelbrot.initialScaleBounds[0][1] / (zoom * zoom)) + xOffset };
-            mandelbrot.yScaleBounds = new double[2] { (mandelbrot.initialScaleBounds[1][0] / (zoom * zoom)) + yOffset, (mandelbrot.initialScaleBounds[1][1] / (zoom * zoom)) + yOffset };
+            mandelbrot.xScaleBounds = new double[2] { (mandelbrot.initialScaleBounds[0][0] / (zoom)) + xOffset, (mandelbrot.initialScaleBounds[0][1] / (zoom)) + xOffset };
+            mandelbrot.yScaleBounds = new double[2] { (mandelbrot.initialScaleBounds[1][0] / (zoom)) + yOffset, (mandelbrot.initialScaleBounds[1][1] / (zoom)) + yOffset };
             mandelbrot.Render();
             renderStopwatch.Stop();
             Console.WriteLine($"Time Took: {renderStopwatch.Elapsed} Seconds");
             renderStopwatch.Reset();
-            MandelbrotPanel.BackgroundImage = (Image)mandelbrot.bitmap;
+            //MandelbrotPanel.BackgroundImage = (Image)mandelbrot.bitmap;
             MandelbrotPanel.Refresh();
         }
 
         private void VisualiserWindow_Load(object sender, EventArgs e)
         {
-            mandelbrot = new Mandelbrot(MandelbrotPanel.Width, MandelbrotPanel.Height, -2, -2, 2, 2, 1, 100);
+            mandelbrot = new Mandelbrot(MandelbrotPanel.Width, MandelbrotPanel.Height, 2, -2, -2, 2, 2, 1, 250);
             Render(0, 0, zoomValue);
-            MandelbrotPanel.BackgroundImage = (Image)mandelbrot.bitmap;
         }
 
         private void xOffsetValue_KeyPress(object sender, KeyPressEventArgs e)
@@ -88,16 +87,6 @@ namespace Mandelbrot_Visualiser
             {
                 e.Handled = true;
             }
-        }
-
-        private void SetOffsets_Click(object sender, EventArgs e)
-        {
-            //mandelbrot.xScaleBounds[0] += Convert.ToInt32(xOffsetValue.Text);
-            //mandelbrot.yScaleBounds[0] += Convert.ToInt32(yOffsetValue.Text);
-            //mandelbrot.xScaleBounds[1] += Convert.ToInt32(xOffsetValue.Text);
-            //mandelbrot.yScaleBounds[1] += Convert.ToInt32(yOffsetValue.Text);
-            Render(Convert.ToInt32(xOffsetValue.Text), Convert.ToInt32(yOffsetValue.Text), zoomValue);
-            MandelbrotPanel.Refresh();
         }
 
         private void ShiftView_Click(object sender, EventArgs e)
@@ -118,9 +107,7 @@ namespace Mandelbrot_Visualiser
                     break;
             }
             
-            
             Render(recordedXOffset / zoomValue, recordedYOffset / zoomValue, zoomValue);
-            MandelbrotPanel.Refresh();
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
@@ -140,9 +127,30 @@ namespace Mandelbrot_Visualiser
                 double xOffset = MapLocationToScale(e.X, mandelbrot.imageWidth, mandelbrot.xScaleBounds[0], mandelbrot.xScaleBounds[1]);
                 double yOffset = MapLocationToScale(e.Y, mandelbrot.imageHeight, mandelbrot.yScaleBounds[0], mandelbrot.yScaleBounds[1]);
                 Render(recordedXOffset = xOffset , recordedYOffset = yOffset , zoomValue);
-                MandelbrotPanel.Refresh();
             }
             //Console.WriteLine($"{e.X}, {e.Y}");
+        }
+
+        private void PowerText_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)8 && e.KeyChar != '.')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void PowerText_TextChanged(object sender, EventArgs e)
+        {
+            if (double.TryParse(PowerText.Text, out _))
+            {
+                mandelbrot.power = Convert.ToDouble(PowerText.Text);
+                Render(recordedXOffset, recordedYOffset, zoomValue);
+            }
+        }
+
+        private void MandelbrotPanel_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawImage(mandelbrot.bitmap.Bitmap, 0, 0);
         }
     }
 }

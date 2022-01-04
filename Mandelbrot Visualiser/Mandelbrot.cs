@@ -15,7 +15,9 @@ namespace Mandelbrot_Visualiser
 {
     public class Mandelbrot
     {
-        public Bitmap bitmap;
+        public DirectBitmap bitmap;
+
+        public double power;
 
         public int iterations;
         public int imageWidth;
@@ -24,9 +26,10 @@ namespace Mandelbrot_Visualiser
         public double[] yScaleBounds = new double[2];
         public double[][] initialScaleBounds = new double[2][];
 
-        public Mandelbrot(int width = 100, int height = 100, double xMin = -2, double yMin = -2, double xMax = 2, double yMax = 2, double zoom = 1,int iterations = 50)
+        public Mandelbrot(int width = 100, int height = 100, double power = 2, double xMin = -2, double yMin = -2, double xMax = 2, double yMax = 2, double zoom = 1,int iterations = 50)
         {
-            this.bitmap = new Bitmap(width, height);
+            this.bitmap = new DirectBitmap(width, height);
+            this.power = power;
             this.imageWidth = width;
             this.imageHeight = height;
             this.xScaleBounds[0] = xMin / zoom;
@@ -70,7 +73,7 @@ namespace Mandelbrot_Visualiser
         private Color Iterate(Complex c, int iterations)
         {
             Complex z = 0;
-
+            
             for (int i = 0; i < iterations; i++)
             {
                 if (!IsMandelbrot(z))
