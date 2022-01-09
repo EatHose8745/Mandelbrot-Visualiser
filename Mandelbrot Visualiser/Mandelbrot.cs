@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Numerics;
 using System.Drawing;
 using System.IO;
-using ColorHelper;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 using System.Drawing.Imaging;
@@ -66,8 +65,92 @@ namespace Mandelbrot_Visualiser
 
         private Color ColourOfZ(int n)
         {
-            RGB rgb = ColorHelper.ColorConverter.HsvToRgb(new HSV(n, 100, 100));
-            return Color.FromArgb(255, rgb.R, rgb.G, rgb.B);
+            //RGB rgb = ColorHelper.ColorConverter.HsvToRgb(new HSV(n, 100, 100));
+            //return Color.FromArgb(255, rgb.R, rgb.G, rgb.B);
+
+            int r, g, b;
+            HsvToRgb(n, 1, 1, out r, out g, out b);
+            return Color.FromArgb(255, r, g, b);
+        }
+
+        private void HsvToRgb(double h, double S, double V, out int r, out int g, out int b)
+        {
+            double H = h;
+            while (H < 0) { H += 360; };
+            while (H >= 360) { H -= 360; };
+            double R, G, B;
+            if (V <= 0)
+            { R = G = B = 0; }
+            else if (S <= 0)
+            {
+                R = G = B = V;
+            }
+            else
+            {
+                double hf = H / 60.0;
+                int i = (int)Math.Floor(hf);
+                double f = hf - i;
+                double pv = V * (1 - S);
+                double qv = V * (1 - S * f);
+                double tv = V * (1 - S * (1 - f));
+                switch (i)
+                {
+
+                    case 0:
+                        R = V;
+                        G = tv;
+                        B = pv;
+                        break;
+                    case 1:
+                        R = qv;
+                        G = V;
+                        B = pv;
+                        break;
+                    case 2:
+                        R = pv;
+                        G = V;
+                        B = tv;
+                        break;
+                    case 3:
+                        R = pv;
+                        G = qv;
+                        B = V;
+                        break;
+                    case 4:
+                        R = tv;
+                        G = pv;
+                        B = V;
+                        break;
+                    case 5:
+                        R = V;
+                        G = pv;
+                        B = qv;
+                        break;
+                    case 6:
+                        R = V;
+                        G = tv;
+                        B = pv;
+                        break;
+                    case -1:
+                        R = V;
+                        G = pv;
+                        B = qv;
+                        break;
+                    default:
+                        R = G = B = V;
+                        break;
+                }
+            }
+            r = Clamp((int)(R * 255.0));
+            g = Clamp((int)(G * 255.0));
+            b = Clamp((int)(B * 255.0));
+        }
+
+        private int Clamp(int i)
+        {
+            if (i < 0) return 0;
+            if (i > 255) return 255;
+            return i;
         }
 
         private Color Iterate(Complex c, int iterations)

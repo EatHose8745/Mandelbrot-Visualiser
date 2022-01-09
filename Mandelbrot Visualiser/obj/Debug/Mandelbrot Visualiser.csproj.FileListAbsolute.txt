@@ -14,12 +14,10 @@ C:\Users\Joel\Documents\C# Projects\Mandelbrot Visualiser\Mandelbrot Visualiser\
 C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\bin\Debug\Mandelbrot Visualiser.exe.config
 C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\bin\Debug\Mandelbrot Visualiser.exe
 C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\bin\Debug\Mandelbrot Visualiser.pdb
-C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\bin\Debug\ColorHelper.dll
 C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\obj\Debug\Mandelbrot Visualiser.csproj.SuggestedBindingRedirects.cache
 C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\obj\Debug\Mandelbrot_Visualiser.VisualiserWindow.resources
 C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\obj\Debug\Mandelbrot_Visualiser.Properties.Resources.resources
 C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\obj\Debug\Mandelbrot Visualiser.csproj.GenerateResource.cache
 C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\obj\Debug\Mandelbrot Visualiser.csproj.CoreCompileInputs.cache
-C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\obj\Debug\Mandelbrot Visualiser.csproj.CopyComplete
 C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\obj\Debug\Mandelbrot Visualiser.exe
 C:\Users\Joel\Documents\C# Projects\Mandelbrot-Visualiser\Mandelbrot Visualiser\obj\Debug\Mandelbrot Visualiser.pdb
